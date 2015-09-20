@@ -1,0 +1,101 @@
+//
+//  LeHuoZongXiang_Prefix.pch
+//  LeHuoZongXiang
+//
+//  Created by FayuGuo on 15/9/15.
+//  Copyright (c) 2015年 GFY. All rights reserved.
+//
+
+#ifndef LeHuoZongXiang_LeHuoZongXiang_Prefix_pch
+#define LeHuoZongXiang_LeHuoZongXiang_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "SWRevealViewController.h"
+
+#import "MBProgressHUD.h"
+#import "AFNetworking.h"
+#import "UserInfo.h"
+#import "AllTools.h"
+
+
+#define SERVER_HOST @"http://www.lehuozongxiang.com/index.php?"
+#define Login_HOST @"http://wz.lehuozongxiang.com/index.php?"
+
+
+#ifdef DEBUG
+#define NSLog(...) NSLog(__VA_ARGS__)
+//#define debugMethod() NSLog(@"%s", __func__)
+#else
+#define NSLog(...)
+//#define debugMethod()
+#endif
+
+#define SYSTEM_VERSION  [[[UIDevice currentDevice]systemVersion]floatValue]
+#define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
+#define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
+
+#define LOADIMAGE(PATH,TYPE) [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:PATH ofType:TYPE]]
+
+#define ImageNamed(_pointer) [UIImage imageNamed:[UIUtil imageName:_pointer]]
+
+#define DOCUMENT [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+
+
+#define FZCY_FONT(fontSize) [UIFont systemFontOfSize:fontSize]
+
+#define CLEARCOLOR [UIColor clearColor]
+#define COLOR_WITH_RGB(R,G,B) [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:1.0f]
+#define ColorWithRGB_alpha(x,y,z,al) [UIColor colorWithRed: x/255.0f green: y/255.0f blue:z/255.0f alpha:al]
+
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+//G－C－D
+#define BACK(block) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block)
+#define MAIN(block) dispatch_async(dispatch_get_main_queue(),block)
+//NSUserDefaults 实例化
+#define USER_DEFAULT [NSUserDefaults standardUserDefaults]
+
+//由角度获取弧度 有弧度获取角度
+#define degreesToRadian(x) (M_PI * (x) / 180.0)
+#define radianToDegrees(radian) (radian*180.0)/(M_PI)
+
+
+
+
+
+
+
+
+
+
+#define  NSNullEqual(obj) \
+[obj isKindOfClass:[NSNull class]]?nil:obj
+
+#define NSStringSafety(obj) \
+[obj isKindOfClass:[NSObject class]]?[obj description]:@""
+
+#define NSArraySafety(obj) \
+[obj isKindOfClass:[NSArray class]]?obj:nil
+
+#define NSDictionarySafety(obj) \
+[obj isKindOfClass:[NSDictionary class]]?obj:nil
+
+#define ObjectForKeySafety(obj,key) \
+[obj isKindOfClass:[NSDictionary class]]?[obj objectForKey:key]:nil
+
+
+#define ObjectIndexSafety(obj,index) \
+[obj isKindOfClass:[NSArray class]]&&index<[obj count] ? [obj objectAtIndex:index] :nil
+
+
+#define NSMutableArraySafety(obj)  \
+[obj isKindOfClass:[NSArray class]] || [obj isKindOfClass:[NSMutableArray class]] ? [NSMutableArray arrayWithArray:obj] :nil
+
+#define NSMutableDictionarySafety(obj)  \
+[obj isKindOfClass:[NSDictionary class]] || [obj isKindOfClass:[NSMutableDictionary class]] ? [NSMutableDictionary dictionaryWithDictionary:obj] : nil
+
+
+
+#endif
