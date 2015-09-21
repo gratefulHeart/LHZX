@@ -15,6 +15,7 @@
 //#import "MobClick.h"
 #import "UMSocialQQHandler.h"
 #import "UMSocialWechatHandler.h"
+#import "RootNavViewController.h"
 
 @interface AppDelegate ()
 
@@ -35,7 +36,7 @@
     //首页
     FirstViewController *centerView1Controller = [[FirstViewController alloc] init];
     
-    UINavigationController *centerNav = [[UINavigationController alloc]initWithRootViewController:centerView1Controller];
+    RootNavViewController *centerNav = [[RootNavViewController alloc]initWithRootViewController:centerView1Controller];
 
     
     //右侧菜单栏
