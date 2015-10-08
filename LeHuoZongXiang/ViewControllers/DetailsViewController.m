@@ -21,6 +21,7 @@
 @implementation DetailsViewController
 -(void)viewDidDisappear:(BOOL)animated
 {
+    [myWebView stopLoading];
     [myWebView loadHTMLString:@"" baseURL:nil];
     myWebView.delegate = nil;
     [myWebView removeFromSuperview];
@@ -28,6 +29,7 @@
 }
 -(void)dealloc
 {
+    [myWebView stopLoading];
     [myWebView loadHTMLString:@"" baseURL:nil];
     myWebView.delegate = nil;
     [myWebView removeFromSuperview];
@@ -50,20 +52,34 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"详情页面";
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     [self resetNav];
     [self createLeftAndRightBar];
     
+    [self createMyWebView];
+    
+    [self createBackView];
+
+}
+-(void)createMyWebView
+{
     myWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-44)];
     myWebView.delegate = self;
     [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.mUrl] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60]];
     
+    
+    NSUserDefaults *uf = [NSUserDefaults standardUserDefaults];
+    NSString *mid = [uf objectForKey:@"mid"];
+    if (mid==nil||[mid isEqualToString:@""]) {
+        
+        [AllTools messageViewWithText:@"亲，您还没登陆呢"];
+    }
+    
+    NSLog(@"详情页链接：%@",self.mUrl);
+    
     [self.view addSubview:myWebView];
     
 
-    [self createBackView];
-    
-    
 }
 -(void)createBackView
 {
@@ -80,8 +96,8 @@
     
     UIButton *centerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [centerBtn setFrame:CGRectMake((SCREEN_WIDTH-44)/2.0, 0, 44, 44)];
-    [centerBtn setBackgroundImage:LOADIMAGE(@"left_new", @"png") forState:UIControlStateNormal];
-    [centerBtn setBackgroundImage:LOADIMAGE(@"left_new", @"png") forState:UIControlStateNormal];
+    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNum", @"png") forState:UIControlStateNormal];
+    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNum", @"png") forState:UIControlStateNormal];
     [centerBtn addTarget:self action:@selector(bbtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:centerBtn];
     
@@ -143,87 +159,44 @@
     
 //    [[UIApplication sharedApplication]openURL:[NSURL URLWithString:@"shells://"]];
     
-    return;
     
     
     NSString *title = [myWebView stringByEvaluatingJavaScriptFromString:@"document.title"];
-//    NSLog(@"");
-//    NSString *picUrl = [myWebView stringByEvaluatingJavaScriptFromString:@"document.getElementById(\"wx_pic\").getElementsByTagName('img')[0].src"];
-
-    
-//    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:picUrl]]];
-//    if (image) {
-//        image = [UIImage imageNamed:@"icon_58"];
-//    }
     
     NSString *shareText = title;//@"为中华之崛起而奋斗不息！";             //分享内嵌文字
     UIImage *shareImage = [UIImage imageNamed:@"icon_58"];//self.shareImg;//[UIImage imageNamed:@"UMS_social_demo"];          //分享内嵌图片
 //    //
+    if(self.shareImg){
+        shareImage = self.shareImg;
+    }
+    [UMSocialData defaultData].extConfig.qqData.url = self.mUrl;
+    [UMSocialData defaultData].extConfig.qqData.title = @"分享";
     
+    [UMSocialData defaultData].extConfig.qzoneData.url = self.mUrl;
+    [UMSocialData defaultData].extConfig.qzoneData.title = @"分享";
     
+    [UMSocialData defaultData].extConfig.wechatSessionData.url = self.mUrl;
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = @"分享";
     
+    [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.mUrl;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = @"分享";
     
-//    弹出一个分享列表的类似iOS6的UIActivityViewController控件
-//    
-//    @param controller 在该controller弹出分享列表的UIActionSheet
-//    @param appKey 友盟appKey
-//    @param shareText  分享编辑页面的内嵌文字
-//    @param shareImage 分享内嵌图片,用户可以在编辑页面删除
-//    @param snsNames 你要分享到的sns平台类型，该NSArray值是`UMSocialSnsPlatformManager.h`定义的平台名的字符串常量，有UMShareToSina，UMShareToTencent，UMShareToRenren，UMShareToDouban，UMShareToQzone，UMShareToEmail，UMShareToSms等
-//    @param delegate 实现分享完成后的回调对象，如果不关注分享完成的状态，可以设为nil
+    [UMSocialData defaultData].extConfig.sinaData.shareImage = shareImage;
+    [UMSocialData defaultData].extConfig.sinaData.urlResource.url = @"http://www.baidu.com";
     
-//
-    
-    [UMSocialData defaultData].extConfig.qqData.url = self.mUrl;//@"http://baidu.com";
-    [UMSocialData defaultData].extConfig.qzoneData.url = @"http://baidu.com";
-    [UMSocialData defaultData].extConfig.qqData.title = @"QQ分享title";
-    [UMSocialData defaultData].extConfig.qzoneData.title = @"Qzone分享title";
-    //调用快速分享接口
-    [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:UmengAppkey
-                                      shareText:shareText
-                                     shareImage:nil
-                                shareToSnsNames:@[UMShareToQzone,UMShareToQQ,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToTencent]
+
+      [UMSocialSnsService presentSnsIconSheetView:self
+                                           appKey:UmengAppkey
+                                        shareText:shareText
+                                       shareImage:shareImage
+                                shareToSnsNames:@[UMShareToQzone,UMShareToQQ,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToTencent,UMShareToSina]
                                        delegate:self];
     
     
 }
 
 
-//下面可以设置根据点击不同的分享平台，设置不同的分享文字
-//-(void)didSelectSocialPlatform:(NSString *)platformName withSocialData:(UMSocialData *)socialData
-//{
-//
-//    if ([platformName isEqualToString:UMShareToQQ]) {
-//        [UMSocialData defaultData].extConfig.qqData.url = self.mUrl;//@"http://baidu.com";
-//        [UMSocialData defaultData].extConfig.qqData.title = @"QQ分享title";
-//        [UMSocialData defaultData].extConfig.qqData.urlResource.url = @"http://wz.lehuozongxiang.com/Uploads/image/20150826/55dd99b19abbd.png";//@"QQ分享title";
-//
-//
-//    }
-//    else if ([platformName isEqualToString:UMShareToQzone]){
-//        
-//    }
-//    else if([platformName isEqualToString:UMShareToSina]){
-//    
-//    }
-//    else if ([platformName isEqualToString:UMShareToTencent]){
-//    
-//    }
-//    else if ([platformName isEqualToString:UMShareToWechatSession]){
-//    }
-//    else if ([platformName isEqualToString:UMShareToWechatTimeline]){
-//    
-//        
-//    }
-//    
-////    if ([platformName isEqualToString:UMShareToSina]) {
-////        socialData.shareText = @"分享到新浪微博";
-////    }
-////    else{
-////        socialData.shareText = @"分享内嵌文字";
-////    }
-//}
+
 
 -(void)didCloseUIViewController:(UMSViewControllerType)fromViewControllerType
 {
@@ -240,9 +213,12 @@
         //得到分享到的微博平台名
         NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
     }
+
+    NSLog(@"myWebView==%@",myWebView);
+    
+    [self createMyWebView];
+
 }
-
-
 
 
 #pragma mark UIWebViewDelegate

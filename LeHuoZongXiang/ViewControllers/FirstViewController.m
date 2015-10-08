@@ -43,14 +43,16 @@
     
 }
 
-
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.revealViewController revealToggleAnimated:YES];
+}
 #pragma mark UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     NSString *urlString = [[request URL] absoluteString];
     urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    //    NSLog(@"urlString=%@",urlString);
-    if (urlString!=nil&&[urlString rangeOfString:@"lehuozongxiang.com"].location!=NSNotFound&&[urlString rangeOfString:@"&id="].location!=NSNotFound) {
+    if (urlString!=nil&&[urlString rangeOfString:@"&a=view"].location!=NSNotFound) {
         
         DetailsViewController *detailVC = [[DetailsViewController alloc]init];
         detailVC.mUrl = urlString;

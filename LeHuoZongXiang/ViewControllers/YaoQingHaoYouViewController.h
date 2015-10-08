@@ -7,7 +7,8 @@
 //
 
 #import "BaseViewController.h"
+#import "UMSocialControllerService.h"
 
-@interface YaoQingHaoYouViewController : BaseViewController
+@interface YaoQingHaoYouViewController : BaseViewController<UMSocialUIDelegate>
 
 @end

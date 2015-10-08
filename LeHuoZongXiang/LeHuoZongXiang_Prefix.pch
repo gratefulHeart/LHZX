@@ -18,7 +18,8 @@
 #import "AFNetworking.h"
 #import "UserInfo.h"
 #import "AllTools.h"
-
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 
 #define SERVER_HOST @"http://www.lehuozongxiang.com/index.php?"
 #define Login_HOST @"http://wz.lehuozongxiang.com/index.php?"

@@ -18,7 +18,9 @@
 #import "RootNavViewController.h"
 
 @interface AppDelegate ()
-
+{
+    UIImageView *imageV;
+}
 @end
 
 @implementation AppDelegate
@@ -30,6 +32,66 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    imageV = [[UIImageView alloc]initWithFrame:self.window.bounds];
+    [imageV sd_setImageWithURL:[NSURL URLWithString:@"http://img6.faloo.com/Picture/0x0/0/747/747488.jpg"] placeholderImage:LOADIMAGE(@"iphone6", @"png")];
+    
+    [self.window addSubview:imageV];
+    [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(removeLun) userInfo:nil repeats:NO];
+    
+    
+    [self umengShareAndStatistics];
+    
+    [self zhuCePushWithApplication:application];
+    
+    
+    return YES;
+}
+-(void)removeLun
+{
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        imageV.transform = CGAffineTransformMakeScale(1.6, 1.6);
+        imageV.alpha = 0;
+        
+    } completion:^(BOOL finished) {
+        [imageV removeFromSuperview];
+        [self createRootWindow];
+    }];
+    
+
+    
+}
+/**
+ *  注册通知
+ */
+
+-(void)zhuCePushWithApplication:(UIApplication *)application
+{
+    //获取推送权限
+    if ([[[UIDevice currentDevice] systemVersion] doubleValue]>=8.0) {
+        
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge |
+                                                UIUserNotificationTypeAlert |
+                                                UIUserNotificationTypeSound          categories:nil];
+        [application registerUserNotificationSettings:settings];
+        [application registerForRemoteNotifications];
+        
+    }
+    else{
+        [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge |
+         UIRemoteNotificationTypeAlert |
+         UIRemoteNotificationTypeSound];
+        
+    }
+}
+/**
+ *  创建RootViewController
+ */
+
+-(void)createRootWindow
+{
     //左侧菜单栏
     LeftViewController *leftViewController = [[LeftViewController alloc] init];
     
@@ -37,13 +99,13 @@
     FirstViewController *centerView1Controller = [[FirstViewController alloc] init];
     
     RootNavViewController *centerNav = [[RootNavViewController alloc]initWithRootViewController:centerView1Controller];
-
+    
     
     //右侧菜单栏
-//    RightViewController *rightViewController = [[RightViewController alloc] init];
+    //    RightViewController *rightViewController = [[RightViewController alloc] init];
     
     SWRevealViewController *revealViewController = [[SWRevealViewController alloc] initWithRearViewController:leftViewController frontViewController:centerNav];
-//    revealViewController.rightViewController = rightViewController;
+    //    revealViewController.rightViewController = rightViewController;
     
     //浮动层离左边距的宽度
     revealViewController.rearViewRevealWidth = 150;
@@ -56,16 +118,10 @@
     
     
     self.window.rootViewController = revealViewController;
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-
-    
-    [self umengShareAndStatistics];
-    
-    
-    
-    return YES;
 }
+/**
+ *  友盟统计和分享
+ */
 -(void)umengShareAndStatistics
 {
     //设置友盟社会化组件appkey
@@ -91,7 +147,7 @@
     [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
 
     
-//    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
+    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
     
     
 //    //使用友盟统计
@@ -121,6 +177,10 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return  [UMSocialSnsService handleOpenURL:url];
+}
 /**
  这里处理新浪微博SSO授权进入新浪微博客户端后进入后台，再返回原来应用
  */
@@ -149,5 +209,23 @@
         
     }
 }
+
+#pragma mark PUSH
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    // 处理推送消息
+    
+    NSLog(@"userinfo:%@",userInfo);
+    
+    NSLog(@"收到推送消息:%@",[[userInfo objectForKey:@"aps"] objectForKey:@"alert"]);
+}
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSLog(@"regisger success:%@",deviceToken);
+    
+    //注册成功，将deviceToken保存到应用服务器数据库中
+}
+
+
 
 @end

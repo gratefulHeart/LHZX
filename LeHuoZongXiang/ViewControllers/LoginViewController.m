@@ -147,6 +147,7 @@
     
     [manager POST:@"http://wz.lehuozongxiang.com/index.php?g=Home&m=Api&a=login&from=ios" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
+        NSLog(@"responseObject==%@",responseObject);
         NSError * e = nil ;
         NSDictionary *dataInfo = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:&e];
         
