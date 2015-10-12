@@ -17,6 +17,11 @@
 #import "UMSocialWechatHandler.h"
 #import "RootNavViewController.h"
 
+#import "PublicCallConfig.h"
+#import "PublicCallList.h"
+#import "PublicCallPointsManager.h"
+
+
 @interface AppDelegate ()
 {
     UIImageView *imageV;
@@ -46,6 +51,13 @@
     
     [self zhuCePushWithApplication:application];
     
+    
+    
+    [PublicCallConfig PublicCallLaunchWithAppID:@"a18799efa88ceb24" PublicCallAppSecret:@"a1c636d11bb10380"];
+    [PublicCallConfig PublicCallSetUserID:@"this is user"];
+    [PublicCallPointsManager PublicCallEnable];
+    // 设置显示全屏广告的window
+    [PublicCallConfig PublicCallSetFullScreenWindow:self.window];
     
     return YES;
 }
@@ -118,6 +130,8 @@
     
     
     self.window.rootViewController = revealViewController;
+    
+    
 }
 /**
  *  友盟统计和分享

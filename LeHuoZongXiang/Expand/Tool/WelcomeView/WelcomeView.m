@@ -112,7 +112,7 @@
         
         //        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(82, 459, 250, 45)];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(SCREEN_WIDTH*(count-1)+(SCREEN_WIDTH-180)/2.0, SCREEN_HEIGHT-180, 180, 62);
+        button.frame = CGRectMake(SCREEN_WIDTH*(count-1)+(SCREEN_WIDTH-180)/2.0, SCREEN_HEIGHT-150, 180, 50);
 //        [button setBackgroundColor:CLEARCOLOR];
         [button setBackgroundImage:LOADIMAGE(@"WelcomeStart1@2x", @"png") forState:UIControlStateNormal];
         [button setBackgroundImage:LOADIMAGE(@"WelcomeStart0@2x", @"png") forState:UIControlStateHighlighted];

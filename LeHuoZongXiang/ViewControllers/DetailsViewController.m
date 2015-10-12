@@ -89,22 +89,30 @@
     
     UIButton *bbtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [bbtn setFrame:CGRectMake(20, 0, 44, 44)];
-    [bbtn setBackgroundImage:LOADIMAGE(@"left_new", @"png") forState:UIControlStateNormal];
-    [bbtn setBackgroundImage:LOADIMAGE(@"left_new", @"png") forState:UIControlStateNormal];
+//    [bbtn setBackgroundImage:LOADIMAGE(@"left_new", @"png") forState:UIControlStateNormal];
+//    [bbtn setBackgroundImage:LOADIMAGE(@"left_new", @"png") forState:UIControlStateNormal];
+    [bbtn setBackgroundImage:LOADIMAGE(@"left_arrow", @"png") forState:UIControlStateNormal];
+    [bbtn setBackgroundImage:LOADIMAGE(@"left_arrow", @"png") forState:UIControlStateNormal];
     [bbtn addTarget:self action:@selector(bbtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:bbtn];
     
     UIButton *centerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [centerBtn setFrame:CGRectMake((SCREEN_WIDTH-44)/2.0, 0, 44, 44)];
-    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNum", @"png") forState:UIControlStateNormal];
-    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNum", @"png") forState:UIControlStateNormal];
+//    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNum", @"png") forState:UIControlStateNormal];
+//    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNum", @"png") forState:UIControlStateNormal];
+    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNewNum", @"png") forState:UIControlStateNormal];
+    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNewNum", @"png") forState:UIControlStateNormal];
     [centerBtn addTarget:self action:@selector(bbtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:centerBtn];
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setFrame:CGRectMake(SCREEN_WIDTH-64, 0, 44, 44)];
-    [rightBtn setBackgroundImage:LOADIMAGE(@"share_btn", @"png") forState:UIControlStateNormal];
-    [rightBtn setBackgroundImage:LOADIMAGE(@"share_btn", @"png") forState:UIControlStateNormal];
+//    [rightBtn setBackgroundImage:LOADIMAGE(@"share_btn", @"png") forState:UIControlStateNormal];
+//    [rightBtn setBackgroundImage:LOADIMAGE(@"share_btn", @"png") forState:UIControlStateNormal];
+    
+    [rightBtn setBackgroundImage:LOADIMAGE(@"shareNewIcon", @"png") forState:UIControlStateNormal];
+    [rightBtn setBackgroundImage:LOADIMAGE(@"shareNewIcon", @"png") forState:UIControlStateNormal];
+    
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:rightBtn];
     

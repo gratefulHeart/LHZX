@@ -22,7 +22,7 @@
     
     
     myWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
-    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/index.php?g=Home&m=Member&a=xiaxian"] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60]];
+    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/index.php?g=Home&m=Member&a=xiaxian"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
     [self.view addSubview:myWebView];
 }
 

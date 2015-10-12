@@ -73,7 +73,7 @@
     
     NSUserDefaults *uf = [NSUserDefaults standardUserDefaults];
     NSString *mid = [uf objectForKey:@"mid"];
-    if (mid!=nil||![mid isEqualToString:@""]) {
+    if (mid!=nil||![mid isEqualToString:@""]||![mid isKindOfClass:[NSNull class]]) {
         
     }
     else
@@ -82,7 +82,7 @@
     }
     
     myWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
-    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.lehuozongxiang.com/r/%@/b/2",mid]] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60]];
+    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.lehuozongxiang.com/r/%@/b/2",mid]] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
     myWebView.scrollView.bounces = NO;
     [myWebView sizeToFit];
     

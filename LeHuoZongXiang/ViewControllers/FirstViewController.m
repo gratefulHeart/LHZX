@@ -28,13 +28,17 @@
     
     NSUserDefaults *uf = [NSUserDefaults standardUserDefaults];
     NSString *mid = [uf objectForKey:@"mid"];
-    if (mid!=nil||![mid isEqualToString:@""]) {
+    if (mid!=nil||![mid isEqualToString:@""]||![mid isKindOfClass:[NSNull class]]) {
         
     }
     else
     {
         mid = @"";
     }
+    
+    
+    
+    
     [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://www.lehuozongxiang.com/index.php?g=Home&m=Index&a=index&uid=",mid]]cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60]];
     
     myWebView.delegate = self;

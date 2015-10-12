@@ -128,7 +128,7 @@
     passTF.secureTextEntry = YES;
     passTF.returnKeyType = UIReturnKeyDone;
     passTF.placeholder = @"请输入新的密码";
-    passTF.text = @"234567";
+//    passTF.text = @"234567";
     [self.view addSubview:passTF];
     
     
@@ -150,12 +150,10 @@
     passTFTwo.secureTextEntry = YES;
     passTFTwo.returnKeyType = UIReturnKeyDone;
     passTFTwo.placeholder = @"请重复新的密码";
-    passTFTwo.text = @"234567";
+//    passTFTwo.text = @"234567";
     [self.view addSubview:passTFTwo];
     
-    
-    
-    
+
     
     loginBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [loginBtn setFrame:CGRectMake(20, Yoffst_Start+indival*3, (SCREEN_WIDTH-40), 40)];

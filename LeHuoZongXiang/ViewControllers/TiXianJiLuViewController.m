@@ -21,7 +21,7 @@
     // Do any additional setup after loading the view.
     
     myWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
-    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/index.php?g=Home&m=Member&a=withdraw"] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60]];
+    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/index.php?g=Home&m=Member&a=withdraw"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
     [self.view addSubview:myWebView];
 }
 

@@ -60,7 +60,7 @@
     userTF.placeholder = @"请输入手机号";
     userTF.keyboardType = UIKeyboardTypePhonePad;
     userTF.clearsOnBeginEditing = YES;
-    userTF.text = @"15652934696";
+//    userTF.text = @"15652934696";
     userTF.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:userTF];
     
@@ -82,7 +82,7 @@
     passTF.secureTextEntry = YES;
     passTF.returnKeyType = UIReturnKeyDone;
     passTF.placeholder = @"请输入手机号";
-    passTF.text = @"234567";
+//    passTF.text = @"234567";
     [self.view addSubview:passTF];
     
     
@@ -153,7 +153,7 @@
         
         NSLog(@"JSON: %@", dataInfo);
         
-        if([[dataInfo objectForKey:@"ok"]boolValue]){
+        if([[dataInfo objectForKey:@"ok"]intValue]>0){
         
             NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
             [userDef setObject:[NSString stringWithFormat:@"%@",[dataInfo objectForKey:@"mid"]] forKey:@"mid"];
@@ -173,6 +173,26 @@
             [revealViewController pushFrontViewController:centerNav animated:YES];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginUpdate" object:nil];
+            
+            NSDictionary *properties =  [NSDictionary dictionaryWithObjectsAndKeys:
+                                         
+                                         [NSString stringWithFormat:@"%@",[dataInfo objectForKey:@"mid"]],NSHTTPCookieValue,                // token值
+                                         
+                                         @"mid", NSHTTPCookieName,             // token名
+                                         
+                                         @"/", NSHTTPCookiePath,                          // 路径
+                                         
+                                         @"www.lehuozongxiang.com" ,NSHTTPCookieDomain,            // 域
+                                         
+                                         nil];
+            
+            NSHTTPCookie *cookie_PD1 = [NSHTTPCookie cookieWithProperties:properties];
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie_PD1];
+            
+//            NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+//            for (NSHTTPCookie *cookie in [cookieJar cookies]) {
+//                NSLog(@"登陆页面    222222===  所有的 cookie%@", cookie);
+//            }
             
         }
 

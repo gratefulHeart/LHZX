@@ -21,10 +21,9 @@
 
     
     myWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
-    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/Member/about"] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60]];
+    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/Member/about"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
     myWebView.scrollView.bounces = NO;
     [self.view addSubview:myWebView];
-    
     
 }
 

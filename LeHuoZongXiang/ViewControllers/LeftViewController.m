@@ -63,12 +63,10 @@
 -(void)createHeaderView
 {
     UIView *headV = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120)];
-    
     headBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     headBtn.frame =CGRectMake(50, 35, 50, 50);
     [headBtn setBackgroundImage:LOADIMAGE(@"user_logout", @"png") forState:UIControlStateNormal];
     [headBtn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
     [headV addSubview:headBtn];
     
     nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(headBtn.frame), 150, 35)];
@@ -92,6 +90,24 @@
     NSString *mid = [uf objectForKey:@"mid"];
     if (tel!=nil) {
         nameLabel.text = [NSString stringWithFormat:@"%@",mid];
+        
+        
+        NSDictionary *properties =  [NSDictionary dictionaryWithObjectsAndKeys:
+                                     
+                                     [NSString stringWithFormat:@"%@",mid],NSHTTPCookieValue,                // token值
+                                     
+                                     @"mid", NSHTTPCookieName,             // token名
+                                     
+                                     @"/", NSHTTPCookiePath,                          // 路径
+                                     
+                                     @"www.lehuozongxiang.com" ,NSHTTPCookieDomain,            // 域
+                                     
+                                     nil];
+        
+        NSHTTPCookie *cookie_PD1 = [NSHTTPCookie cookieWithProperties:properties];
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie_PD1];
+        
+        
     }
     else
     {

@@ -179,18 +179,18 @@
 {
     if (buttonIndex ==0) {
        
-//        
-//        NSUserDefaults *uf = [NSUserDefaults standardUserDefaults];
-//        [uf removeObjectForKey:@"tel"];
-//        [uf removeObjectForKey:@"pwd"];
-//        [uf removeObjectForKey:@"mid"];
-//        [uf synchronize];
-        NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
-        NSDictionary * dict = [defs dictionaryRepresentation];
-        for (id key in dict) {
-            [defs removeObjectForKey:key];
-        }
-        [defs synchronize];
+        
+        NSUserDefaults *uf = [NSUserDefaults standardUserDefaults];
+        [uf removeObjectForKey:@"tel"];
+        [uf removeObjectForKey:@"pwd"];
+        [uf removeObjectForKey:@"mid"];
+        [uf synchronize];
+//        NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+//        NSDictionary * dict = [defs dictionaryRepresentation];
+//        for (id key in dict) {
+//            [defs removeObjectForKey:key];
+//        }
+//        [defs synchronize];
         
         SWRevealViewController *revealViewController = self.revealViewController;
         LoginViewController *loginVC = [[LoginViewController alloc]init];
@@ -199,6 +199,18 @@
         [revealViewController pushFrontViewController:centerNav animated:YES];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginUpdate" object:nil];
+        
+        /**
+         *  注销之后清楚缓存！
+         */
+        NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        NSArray *cookieArray = [NSArray arrayWithArray:[cookieJar cookies]];
+        for (id obj in cookieArray) {
+            [cookieJar deleteCookie:obj];
+        }
+        
+        
+        
     }
     else
     {
