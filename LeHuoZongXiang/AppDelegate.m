@@ -41,7 +41,7 @@
     [self.window makeKeyAndVisible];
     
     imageV = [[UIImageView alloc]initWithFrame:self.window.bounds];
-    [imageV sd_setImageWithURL:[NSURL URLWithString:@"http://img6.faloo.com/Picture/0x0/0/747/747488.jpg"] placeholderImage:LOADIMAGE(@"iphone6", @"png")];
+    [imageV sd_setImageWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/images/start_ad.jpg"] placeholderImage:LOADIMAGE(@"iphone6", @"png")];
     
     [self.window addSubview:imageV];
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(removeLun) userInfo:nil repeats:NO];

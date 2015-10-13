@@ -10,4 +10,6 @@
 
 @interface WoYaoTiXianViewController : BaseViewController
 
+@property(nonatomic,strong)MBProgressHUD *hud;
+
 @end

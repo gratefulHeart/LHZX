@@ -11,7 +11,7 @@
 #import "UMSocialSnsService.h"
 #import "AppDelegate.h"
 #import "UMSocialSnsPlatformManager.h"
-@interface YaoQingHaoYouViewController ()
+@interface YaoQingHaoYouViewController ()<UIWebViewDelegate>
 {
     UIWebView *myWebView;
 }
@@ -70,6 +70,9 @@
     
     [self createRightBar];
     
+    self.hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    self.hud.mode =  MBProgressHUDModeIndeterminate;
+    self.hud.labelText = @"加载中";
     
     NSUserDefaults *uf = [NSUserDefaults standardUserDefaults];
     NSString *mid = [uf objectForKey:@"mid"];
@@ -82,6 +85,7 @@
     }
     
     myWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
+    myWebView.delegate = self;
     [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.lehuozongxiang.com/r/%@/b/2",mid]] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
     myWebView.scrollView.bounces = NO;
     [myWebView sizeToFit];
@@ -104,7 +108,23 @@
         NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
     }
 }
-
+#pragma mark UIWebViewDelegte
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self.hud hide:YES];
+    
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    self.hud.mode = MBProgressHUDModeText;
+    self.hud.labelText = [NSString stringWithFormat:@"%@",[error localizedDescription]];//@"加载失败，网络异常";
+    [self.hud hide:YES afterDelay:0.5];
+    [self.hud hide:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

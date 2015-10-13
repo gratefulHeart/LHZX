@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface ShouTuZhuanQianViewController : BaseViewController
+@property(nonatomic,strong)MBProgressHUD *hud;
 
 @end

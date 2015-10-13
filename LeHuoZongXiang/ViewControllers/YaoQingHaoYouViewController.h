@@ -10,5 +10,6 @@
 #import "UMSocialControllerService.h"
 
 @interface YaoQingHaoYouViewController : BaseViewController<UMSocialUIDelegate>
+@property(nonatomic,strong)MBProgressHUD *hud;
 
 @end

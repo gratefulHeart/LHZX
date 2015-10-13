@@ -10,11 +10,13 @@
 #import "UMSocialSnsService.h"
 #import "AppDelegate.h"
 #import "UMSocialSnsPlatformManager.h"
+
 @interface DetailsViewController ()<UIWebViewDelegate>
 {
     UIWebView *myWebView;
 }
 @property(nonatomic,strong)UIImage *shareImg;
+@property(nonatomic,strong)MBProgressHUD *hud;
 
 @end
 
@@ -56,9 +58,44 @@
     [self resetNav];
     [self createLeftAndRightBar];
     
+    
+    self.hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    self.hud.mode =  MBProgressHUDModeIndeterminate;
+    self.hud.labelText = @"加载中";
+    
+    
+    
     [self createMyWebView];
     
-    [self createBackView];
+    
+    [self startNum];
+    
+
+}
+-(void)startNum
+{
+    
+    NSUserDefaults *uf = [NSUserDefaults standardUserDefaults];
+    NSString *mid = [uf objectForKey:@"mid"];
+    if (mid==nil||[mid isEqualToString:@""]) {
+        mid = @"";
+    }
+    NSString *mUrl = [NSString stringWithFormat:@"http://www.lehuozongxiang.com/index.php?g=Home&m=Api&a=article_count&mid=%@",mid];
+    NSLog(@"mUrl====%@",mUrl);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager GET:mUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        
+        [self createBackViewWithNum:[NSString stringWithFormat:@"%@",[responseObject objectForKey:@"count"]]];
+
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        
+        [self createBackViewWithNum:@"0"];
+
+    }];
 
 }
 -(void)createMyWebView
@@ -81,7 +118,7 @@
     
 
 }
--(void)createBackView
+-(void)createBackViewWithNum:(NSString *)num
 {
     UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(myWebView.frame), SCREEN_WIDTH, 44)];
     bottomView.backgroundColor = ColorWithRGB_alpha(238, 238, 238, 1);//[UIColor whiteColor];
@@ -97,11 +134,16 @@
     [bottomView addSubview:bbtn];
     
     UIButton *centerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [centerBtn setFrame:CGRectMake((SCREEN_WIDTH-44)/2.0, 0, 44, 44)];
+    [centerBtn setFrame:CGRectMake((SCREEN_WIDTH-100)/2.0, 0, 100, 44)];
 //    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNum", @"png") forState:UIControlStateNormal];
 //    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNum", @"png") forState:UIControlStateNormal];
-    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNewNum", @"png") forState:UIControlStateNormal];
-    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNewNum", @"png") forState:UIControlStateNormal];
+//    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNewNum", @"png") forState:UIControlStateNormal];
+//    [centerBtn setBackgroundImage:LOADIMAGE(@"shareNewNum", @"png") forState:UIControlStateNormal];
+    
+    [centerBtn setAttributedTitle:[self modifyTitleWithNum:num] forState:UIControlStateNormal];
+//    [centerBtn setAttributedTitle:[self modifyTitleWithNum:num] forState:UIControlStateNormal];
+
+    
     [centerBtn addTarget:self action:@selector(bbtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:centerBtn];
     
@@ -112,16 +154,35 @@
     
     [rightBtn setBackgroundImage:LOADIMAGE(@"shareNewIcon", @"png") forState:UIControlStateNormal];
     [rightBtn setBackgroundImage:LOADIMAGE(@"shareNewIcon", @"png") forState:UIControlStateNormal];
-    
+
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:rightBtn];
     
     
 }
+-(NSMutableAttributedString *)modifyTitleWithNum:(NSString *)num
+{
+    
+    NSTextAttachment *textAttach = [[NSTextAttachment alloc] init];
+    textAttach.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"shareNewNum" ofType:@"png"]];
+    //    textAttach.bounds = CGRectMake(0, -3, 18, 16);
+    textAttach.bounds = CGRectMake(6, -17, 44, 44);
+    
+    //    l.font = [UIFont systemFontOfSize:14];
+    NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
+    NSMutableAttributedString *attributedText =[[NSMutableAttributedString alloc] initWithString:@"" attributes:nil];
+    
+    NSDictionary *attribs = @{NSFontAttributeName: [UIFont systemFontOfSize:14],NSForegroundColorAttributeName:COLOR_WITH_RGB(250, 89, 20)};
+    NSMutableAttributedString *attributedText1 =[[NSMutableAttributedString alloc] initWithString:num attributes:attribs];
+    [attributedText appendAttributedString:strA];
+    [attributedText appendAttributedString:attributedText1];
+    return attributedText;
+}
+
 
 -(void)bbtnClick:(UIButton *)b
 {
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 - (UIImage*) createImageWithColor: (UIColor*) color
 {
@@ -256,10 +317,17 @@
             NSLog(@"error");
         }
     });
+    
+    [self.hud hide:YES];
 
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
+    self.hud.mode = MBProgressHUDModeText;
+    
+    self.hud.labelText = [NSString stringWithFormat:@"%@",[error localizedDescription]];//@"加载失败，网络异常";
+    [self.hud hide:YES afterDelay:0.5];
+    [self.hud hide:YES];
     
 }
 

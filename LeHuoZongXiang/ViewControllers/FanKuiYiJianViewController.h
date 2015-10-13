@@ -10,4 +10,6 @@
 
 @interface FanKuiYiJianViewController : BaseViewController
 
+@property(nonatomic,strong)MBProgressHUD *hud;
+
 @end

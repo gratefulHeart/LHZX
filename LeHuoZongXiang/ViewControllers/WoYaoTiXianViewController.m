@@ -8,7 +8,7 @@
 
 #import "WoYaoTiXianViewController.h"
 
-@interface WoYaoTiXianViewController ()
+@interface WoYaoTiXianViewController ()<UIWebViewDelegate>
 {
     UIWebView *myWebView;
 }
@@ -20,8 +20,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    myWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     
+    self.hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    self.hud.mode =  MBProgressHUDModeIndeterminate;
+    self.hud.labelText = @"加载中";
+    
+    myWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
+    myWebView.delegate = self;
     
 //    // 寻找URL为HOST的相关cookie，不用担心，步骤2已经自动为cookie设置好了相关的URL信息
 //    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com"]]; // 这里的HOST是你web服务器的域名地址
@@ -86,6 +91,24 @@
     
 }
 
+#pragma mark UIWebViewDelegate
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self.hud hide:YES];
+
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    self.hud.mode = MBProgressHUDModeText;
+    self.hud.labelText = [NSString stringWithFormat:@"%@",[error localizedDescription]];//@"加载失败，网络异常";
+    [self.hud hide:YES afterDelay:0.5];
+    [self.hud hide:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

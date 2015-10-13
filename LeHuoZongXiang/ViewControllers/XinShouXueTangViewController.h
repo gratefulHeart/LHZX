@@ -13,4 +13,6 @@
     UIWebView *myWebView;
     
 }
+@property(nonatomic,strong)MBProgressHUD *hud;
+
 @end

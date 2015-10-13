@@ -13,6 +13,8 @@
 {
     UIWebView *myWebView;
 }
+@property(nonatomic,strong)MBProgressHUD *hud;
+
 @end
 
 @implementation FirstViewController
@@ -24,6 +26,13 @@
     self.view.backgroundColor = [UIColor greenColor];
     self.title = @"乐享赚钱";
 
+    
+    self.hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    self.hud.mode =  MBProgressHUDModeIndeterminate;
+    self.hud.labelText = @"加载中";
+
+    
+    
     myWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
     
     NSUserDefaults *uf = [NSUserDefaults standardUserDefaults];
@@ -81,10 +90,15 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    
+    [self.hud hide:YES];
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
+    self.hud.mode = MBProgressHUDModeText;
+    
+    self.hud.labelText = [NSString stringWithFormat:@"%@",[error localizedDescription]];//@"加载失败，网络异常";
+    [self.hud hide:YES afterDelay:0.5];
+    [self.hud hide:YES];
     
 }
 - (void)didReceiveMemoryWarning {

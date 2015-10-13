@@ -9,5 +9,6 @@
 #import "BaseViewController.h"
 
 @interface ZhuanKePaiHangViewController : BaseViewController
+@property(nonatomic,strong)MBProgressHUD *hud;
 
 @end
