@@ -81,10 +81,10 @@
         NSLog(@"responseObject==%@",responseObject);
 
 
-        NSString *msg = [responseObject objectForKey:@"title"];
-        self.hud.mode =  MBProgressHUDModeText;
-        self.hud.labelText = [NSString stringWithFormat:@"%@",[msg isEqualToString:@""]?@"成功":msg];//@"网络请求成功";
-        [self.hud hide:YES afterDelay:0.5];
+//        NSString *msg = [responseObject objectForKey:@"title"];
+//        self.hud.mode =  MBProgressHUDModeText;
+//        self.hud.labelText = [NSString stringWithFormat:@"%@",[msg isEqualToString:@""]?@"成功":msg];//@"网络请求成功";
+        [self.hud hide:YES ];
         
         if([[responseObject objectForKey:@"code"]intValue]>0){
             

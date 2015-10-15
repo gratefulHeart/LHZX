@@ -10,7 +10,7 @@
 
 #import "UMSocialControllerService.h"
 
-#define UmengAppkey @"53290df956240b6b4a0084b3"
+#define UmengAppkey @"561df563e0f55ae889000629"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

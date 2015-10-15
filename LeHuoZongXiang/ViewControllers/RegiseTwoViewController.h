@@ -10,4 +10,6 @@
 
 @interface RegiseTwoViewController : UIViewController
 
+@property(nonatomic,strong)NSString *userPhone;
+
 @end

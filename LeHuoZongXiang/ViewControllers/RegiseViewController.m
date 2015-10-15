@@ -94,6 +94,12 @@
 -(void)loginBtnClick:(UIButton *)b
 {
 
+    if([userTF.text length]!=11){
+
+        [AllTools messageViewWithText:@"请输入正确的手机号!"];
+        return;
+    }
+    
     self.hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     self.hud.mode =  MBProgressHUDModeIndeterminate;
     self.hud.labelText = @"注册中";
@@ -107,15 +113,24 @@
     [manager GET:mUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         
-//        if([responseObject objectForKey:@""])
+        if([[responseObject objectForKey:@"code"] intValue]>0){
+        
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                RegiseTwoViewController *regiseTwoVC = [[RegiseTwoViewController alloc]init];
+                regiseTwoVC.userPhone = userTF.text;
+                [self.navigationController pushViewController:regiseTwoVC animated:YES];
+                
+            });
+        }
         
         
         
         NSString *msg = [responseObject objectForKey:@"msg"];
         
         self.hud.mode =  MBProgressHUDModeText;
-        self.hud.labelText = [NSString stringWithFormat:@"%@",[msg isEqualToString:@""]?@"登录成功":msg];//@"网络请求成功";
-        [self.hud hide:YES afterDelay:1.5];
+        self.hud.labelText = [NSString stringWithFormat:@"%@",[msg isEqualToString:@""]?@"验证码发送成功":msg];//@"网络请求成功";
+        [self.hud hide:YES afterDelay:1.1];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -128,8 +143,7 @@
     }];
 
     
-//    RegiseTwoViewController *regiseTwoVC = [[RegiseTwoViewController alloc]init];
-//    [self.navigationController pushViewController:regiseTwoVC animated:YES];
+
     
 }
 -(void)touchesBegan:(UITouch*)touches withEvent:(UIEvent *)event

@@ -38,16 +38,16 @@
 
     
     [UMSocialData defaultData].extConfig.qqData.url = @"http://www.lehuozongxiang.com";
-    [UMSocialData defaultData].extConfig.qqData.title = @"分享";
+    [UMSocialData defaultData].extConfig.qqData.title = title;//@"分享";
     
     [UMSocialData defaultData].extConfig.qzoneData.url = @"http://www.lehuozongxiang.com";
-    [UMSocialData defaultData].extConfig.qzoneData.title = @"分享";
+    [UMSocialData defaultData].extConfig.qzoneData.title = title;//@"分享";
     
     [UMSocialData defaultData].extConfig.wechatSessionData.url = @"http://www.lehuozongxiang.com";
-    [UMSocialData defaultData].extConfig.wechatSessionData.title = @"分享";
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = title;//@"分享";
     
     [UMSocialData defaultData].extConfig.wechatTimelineData.url = @"http://www.lehuozongxiang.com";
-    [UMSocialData defaultData].extConfig.wechatTimelineData.title = @"分享";
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = title;//@"分享";
     
     [UMSocialData defaultData].extConfig.sinaData.shareImage = shareImage;
     [UMSocialData defaultData].extConfig.sinaData.urlResource.resourceType = UMSocialUrlResourceTypeImage;

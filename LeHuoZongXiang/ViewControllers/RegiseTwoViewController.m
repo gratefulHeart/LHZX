@@ -75,6 +75,7 @@
     userTF = [[UITextField alloc]initWithFrame:CGRectMake(110, Yoffset-20, SCREEN_WIDTH-130, 30)];
     userTF.delegate = self;
     userTF.placeholder = @"请输入手机号";
+    userTF.text = self.userPhone;
     userTF.keyboardType = UIKeyboardTypePhonePad;
     userTF.clearsOnBeginEditing = YES;
     userTF.returnKeyType = UIReturnKeyDone;

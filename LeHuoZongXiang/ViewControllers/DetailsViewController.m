@@ -144,7 +144,7 @@
 //    [centerBtn setAttributedTitle:[self modifyTitleWithNum:num] forState:UIControlStateNormal];
 
     
-    [centerBtn addTarget:self action:@selector(bbtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    [centerBtn addTarget:self action:@selector(bbtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [bottomView addSubview:centerBtn];
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -182,7 +182,7 @@
 
 -(void)bbtnClick:(UIButton *)b
 {
-//    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (UIImage*) createImageWithColor: (UIColor*) color
 {
@@ -239,19 +239,19 @@
         shareImage = self.shareImg;
     }
     [UMSocialData defaultData].extConfig.qqData.url = self.mUrl;
-    [UMSocialData defaultData].extConfig.qqData.title = @"分享";
+    [UMSocialData defaultData].extConfig.qqData.title = title;//@"分享";
     
     [UMSocialData defaultData].extConfig.qzoneData.url = self.mUrl;
-    [UMSocialData defaultData].extConfig.qzoneData.title = @"分享";
+    [UMSocialData defaultData].extConfig.qzoneData.title = title;//@"分享";
     
     [UMSocialData defaultData].extConfig.wechatSessionData.url = self.mUrl;
-    [UMSocialData defaultData].extConfig.wechatSessionData.title = @"分享";
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = title;//@"分享";
     
     [UMSocialData defaultData].extConfig.wechatTimelineData.url = self.mUrl;
-    [UMSocialData defaultData].extConfig.wechatTimelineData.title = @"分享";
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = title;//@"分享";
     
     [UMSocialData defaultData].extConfig.sinaData.shareImage = shareImage;
-    [UMSocialData defaultData].extConfig.sinaData.urlResource.url = @"http://www.baidu.com";
+    [UMSocialData defaultData].extConfig.sinaData.urlResource.url = @"http://www.lehuozongxiang.com";
     
 
       [UMSocialSnsService presentSnsIconSheetView:self
