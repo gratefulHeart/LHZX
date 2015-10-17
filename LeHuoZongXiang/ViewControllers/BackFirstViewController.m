@@ -1,36 +1,54 @@
 //
-//  ShouTuZhuanQianViewController.m
+//  BackFirstViewController.m
 //  LeHuoZongXiang
 //
-//  Created by FayuGuo on 15/9/15.
+//  Created by FayuGuo on 15/10/17.
 //  Copyright (c) 2015年 GFY. All rights reserved.
 //
 
-#import "ShouTuZhuanQianViewController.h"
+#import "BackFirstViewController.h"
 
-@interface ShouTuZhuanQianViewController ()<UIWebViewDelegate>
-{
-    UIWebView *myWebView;
-}
+@interface BackFirstViewController ()<UIWebViewDelegate>
+
+@property(nonatomic,strong)MBProgressHUD *hud;
+
 @end
 
-@implementation ShouTuZhuanQianViewController
+@implementation BackFirstViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"乐活纵享";
+    
     self.hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     self.hud.mode =  MBProgressHUDModeIndeterminate;
     self.hud.labelText = @"加载中";
     
-    myWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
-    myWebView.delegate = self;
     
-    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/index.php?g=Home&m=Member&a=xiaxian"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:40]];
+    myWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
+    
+    NSUserDefaults *uf = [NSUserDefaults standardUserDefaults];
+    NSString *mid = [uf objectForKey:@"mid"];
+    if (mid!=nil||![mid isEqualToString:@""]||![mid isKindOfClass:[NSNull class]]) {
+        
+    }
+    else
+    {
+        mid = @"";
+    }
+    
+    
+    
+    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/Home/Member/index"] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:30]];
+    
+    myWebView.delegate = self;
+    myWebView.scrollView.bounces = NO;
     [self.view addSubview:myWebView];
+
 }
-#pragma mark UIWebViewDelegate
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     
@@ -42,10 +60,13 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     self.hud.mode = MBProgressHUDModeText;
+    
     self.hud.labelText = [NSString stringWithFormat:@"%@",[error localizedDescription]];//@"加载失败，网络异常";
-    [self.hud hide:YES afterDelay:0.5];
+    [self.hud hide:YES afterDelay:0.1];
     [self.hud hide:YES];
+    
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

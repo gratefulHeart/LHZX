@@ -32,6 +32,7 @@
 		4A9811981BAED415000255F6 /* back3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A9811941BAED415000255F6 /* back3@2x.png */; };
 		4A98119B1BAEEC7F000255F6 /* AboutAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A98119A1BAEEC7F000255F6 /* AboutAppViewController.m */; };
 		4A98119D1BAEF24E000255F6 /* wemall_detail_indicata_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A98119C1BAEF24E000255F6 /* wemall_detail_indicata_right.png */; };
+		4A9F94D01BD1F25D00D61DDA /* BackFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9F94CF1BD1F25D00D61DDA /* BackFirstViewController.m */; };
 		4AC886481BAFF80400F7A9E9 /* WelcomeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC886421BAFF80400F7A9E9 /* WelcomeManager.m */; };
 		4AC886491BAFF80400F7A9E9 /* WelcomeStart0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AC886431BAFF80400F7A9E9 /* WelcomeStart0@2x.png */; };
 		4AC8864A1BAFF80400F7A9E9 /* WelcomeStart1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AC886441BAFF80400F7A9E9 /* WelcomeStart1@2x.png */; };
@@ -173,6 +174,8 @@
 		4A9811991BAEEC7F000255F6 /* AboutAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutAppViewController.h; sourceTree = "<group>"; };
 		4A98119A1BAEEC7F000255F6 /* AboutAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutAppViewController.m; sourceTree = "<group>"; };
 		4A98119C1BAEF24E000255F6 /* wemall_detail_indicata_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wemall_detail_indicata_right.png; sourceTree = "<group>"; };
+		4A9F94CE1BD1F25D00D61DDA /* BackFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackFirstViewController.h; sourceTree = "<group>"; };
+		4A9F94CF1BD1F25D00D61DDA /* BackFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackFirstViewController.m; sourceTree = "<group>"; };
 		4AC886411BAFF80400F7A9E9 /* WelcomeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeManager.h; sourceTree = "<group>"; };
 		4AC886421BAFF80400F7A9E9 /* WelcomeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeManager.m; sourceTree = "<group>"; };
 		4AC886431BAFF80400F7A9E9 /* WelcomeStart0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WelcomeStart0@2x.png"; sourceTree = "<group>"; };
@@ -634,6 +637,8 @@
 				4AD98EB91BA7E29E00A9C1DC /* ZhuanKePaiHangViewController.m */,
 				4AD98EBB1BA7E2B100A9C1DC /* YingYongTiYanViewController.h */,
 				4AD98EBC1BA7E2B100A9C1DC /* YingYongTiYanViewController.m */,
+				4A9F94CE1BD1F25D00D61DDA /* BackFirstViewController.h */,
+				4A9F94CF1BD1F25D00D61DDA /* BackFirstViewController.m */,
 				4ADA2A121BA9485300888364 /* LoginViewController.h */,
 				4ADA2A131BA9485300888364 /* LoginViewController.m */,
 				4A0831501BAD24FD0065FBA9 /* RegiseViewController.h */,
@@ -971,6 +976,7 @@
 				4ADA2A351BA949F500888364 /* UIImage+Blur.m in Sources */,
 				4ADA2A3E1BA94A0800888364 /* UIImage+WaterMark.m in Sources */,
 				4ADA2A201BA9498A00888364 /* MessageView.m in Sources */,
+				4A9F94D01BD1F25D00D61DDA /* BackFirstViewController.m in Sources */,
 				4A9633491BA2D401000EB04D /* main.m in Sources */,
 				4ADA2A311BA949E300888364 /* UIImage+Resize.m in Sources */,
 				4ADA2A291BA949D400888364 /* NSString+MD5Addition.m in Sources */,

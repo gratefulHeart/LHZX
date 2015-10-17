@@ -64,30 +64,30 @@
     self.hud.labelText = @"加载中";
     
     
-    
     [self createMyWebView];
     
+    NSArray *arr = [self.mUrl componentsSeparatedByString:@"&id="];
+    NSString *ids = [arr objectAtIndex:1];
+    NSLog(@"ids = %@",ids);
+    NSArray *arr2 = [ids componentsSeparatedByString:@"&"];
+    NSString *lId = [arr2  firstObject];
+    NSLog(@"lId  = %@",lId);
     
-    [self startNum];
+    [self startNumWithlId:lId];
     
 
 }
--(void)startNum
+-(void)startNumWithlId:(NSString *)lId
 {
     
-    NSUserDefaults *uf = [NSUserDefaults standardUserDefaults];
-    NSString *mid = [uf objectForKey:@"mid"];
-    if (mid==nil||[mid isEqualToString:@""]) {
-        mid = @"";
-    }
-    NSString *mUrl = [NSString stringWithFormat:@"http://www.lehuozongxiang.com/index.php?g=Home&m=Api&a=article_count&mid=%@",mid];
+    NSString *mUrl = [NSString stringWithFormat:@"http://www.lehuozongxiang.com/index.php?g=Home&m=Api&a=article_count&id=%@",lId];
     NSLog(@"mUrl====%@",mUrl);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     [manager GET:mUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         
-        [self createBackViewWithNum:[NSString stringWithFormat:@"%@",[responseObject objectForKey:@"count"]]];
+        [self createBackViewWithNum:[NSString stringWithFormat:@"%@",[responseObject objectForKey:@"view"]]];
 
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -102,7 +102,7 @@
 {
     myWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-44)];
     myWebView.delegate = self;
-    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.mUrl] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60]];
+    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.mUrl] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:40]];
     
     
     NSUserDefaults *uf = [NSUserDefaults standardUserDefaults];
@@ -326,7 +326,7 @@
     self.hud.mode = MBProgressHUDModeText;
     
     self.hud.labelText = [NSString stringWithFormat:@"%@",[error localizedDescription]];//@"加载失败，网络异常";
-    [self.hud hide:YES afterDelay:0.5];
+    [self.hud hide:YES afterDelay:0.1];
     [self.hud hide:YES];
     
 }

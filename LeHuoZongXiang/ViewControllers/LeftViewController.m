@@ -19,6 +19,8 @@
 #import "LoginViewController.h"
 #import "PersonInfoViewController.h"
 
+#import "BackFirstViewController.h"
+
 @interface LeftViewController ()
 {
     UIButton *headBtn;
@@ -209,7 +211,7 @@
                 viewController = [[YingYongTiYanViewController alloc] init];
                 break;
             case 9:
-                viewController = [[FirstViewController alloc] init];
+                viewController = [[BackFirstViewController alloc] init];
                 
                 break;
             default:
@@ -236,19 +238,19 @@
                 viewController = [[LoginViewController alloc] init];
                 break;
             case 5:
-                viewController = [[FanKuiYiJianViewController alloc] init];
+                viewController = [[LoginViewController alloc] init];
                 break;
             case 6:
                 viewController = [[LoginViewController alloc] init];
                 break;
             case 7:
-                viewController = [[ZhuanKePaiHangViewController alloc] init];
+                viewController = [[LoginViewController alloc] init];
                 break;
             case 8:
                 viewController = [[LoginViewController alloc] init];
                 break;
             case 9:
-                viewController = [[FirstViewController alloc] init];
+                viewController = [[LoginViewController alloc] init];
                 break;
             default:
                 break;

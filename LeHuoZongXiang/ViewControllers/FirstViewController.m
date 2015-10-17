@@ -13,7 +13,7 @@
 {
     UIWebView *myWebView;
 }
-@property(nonatomic,strong)MBProgressHUD *hud;
+//@property(nonatomic,strong)MBProgressHUD *hud;
 
 @end
 
@@ -23,32 +23,28 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor greenColor];
-    self.title = @"乐享赚钱";
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.title = @"乐活纵享";
 
-    
-    self.hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-    self.hud.mode =  MBProgressHUDModeIndeterminate;
-    self.hud.labelText = @"加载中";
-
+//    self.hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+//    self.hud.mode =  MBProgressHUDModeIndeterminate;
+//    self.hud.labelText = @"加载中";
     
     
     myWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
     
     NSUserDefaults *uf = [NSUserDefaults standardUserDefaults];
     NSString *mid = [uf objectForKey:@"mid"];
-    if (mid!=nil||![mid isEqualToString:@""]||![mid isKindOfClass:[NSNull class]]) {
-        
+    if (mid==nil||[mid isEqualToString:@""]||[mid isKindOfClass:[NSNull class]]) {
+        mid = @"";
     }
     else
     {
-        mid = @"";
+        
     }
     
     
-    
-    
-    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://www.lehuozongxiang.com/index.php?g=Home&m=Index&a=index&uid=",mid]]cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60]];
+    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",@"http://www.lehuozongxiang.com/index.php?g=Home&m=Index&a=index&uid=",mid]]cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:40]];
     
     myWebView.delegate = self;
     myWebView.scrollView.bounces = NO;
@@ -63,25 +59,39 @@
 #pragma mark UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSString *urlString = [[request URL] absoluteString];
-    urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    if (urlString!=nil&&[urlString rangeOfString:@"&a=view"].location!=NSNotFound) {
-        
-        DetailsViewController *detailVC = [[DetailsViewController alloc]init];
-        detailVC.mUrl = urlString;
-        [self.navigationController pushViewController:detailVC animated:YES];
-        
-        [webView goBack];
-        
-        return NO;
-    }
-    else if (urlString==nil){
     
-        [webView goBack];
-        return NO;
+    if (navigationType == UIWebViewNavigationTypeLinkClicked ) {
+
+        NSLog(@"111111111111====");
+        NSString *urlString = [[request URL] absoluteString];
+        urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        if (urlString!=nil&&[urlString rangeOfString:@"&a=view"].location!=NSNotFound) {
+            [webView stopLoading];
+
+            DetailsViewController *detailVC = [[DetailsViewController alloc]init];
+            detailVC.mUrl = urlString;
+            [self.navigationController pushViewController:detailVC animated:YES];
+            
+            [webView goBack];
+            [webView stopLoading];
+            
+            return NO;
+        }
+        else if (urlString==nil){
+            
+            
+            
+            [webView goBack];
+            [webView stopLoading];
+            
+            return NO;
+        }
+        NSLog(@"urlStr = %@",urlString);
+
     }
     
-    NSLog(@"urlStr = %@",urlString);
+    
+    
     return YES;
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView
@@ -90,15 +100,15 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [self.hud hide:YES];
+//    [self.hud hide:YES];
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    self.hud.mode = MBProgressHUDModeText;
-    
-    self.hud.labelText = [NSString stringWithFormat:@"%@",[error localizedDescription]];//@"加载失败，网络异常";
-    [self.hud hide:YES afterDelay:0.5];
-    [self.hud hide:YES];
+//    self.hud.mode = MBProgressHUDModeText;
+//    
+//    self.hud.labelText = [NSString stringWithFormat:@"%@",[error localizedDescription]];//@"加载失败，网络异常";
+//    [self.hud hide:YES afterDelay:0.1];
+//    [self.hud hide:YES];
     
 }
 - (void)didReceiveMemoryWarning {

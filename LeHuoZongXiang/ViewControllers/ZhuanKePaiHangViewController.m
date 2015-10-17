@@ -26,7 +26,7 @@
     
     myWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     myWebView.delegate = self;
-    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/index.php?g=Home&m=Member&a=rank"] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:60]];
+    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/index.php?g=Home&m=Member&a=rank"] cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:40]];
     [self.view addSubview:myWebView];
 }
 #pragma mark UIWebViewDelegate

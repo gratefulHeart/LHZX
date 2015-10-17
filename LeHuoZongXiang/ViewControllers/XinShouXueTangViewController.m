@@ -26,7 +26,20 @@
     
     myWebView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     myWebView.delegate = self;
-    [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/Member/about"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60]];
+    
+    NSUserDefaults *uf = [NSUserDefaults standardUserDefaults];
+    NSString *mid = [uf objectForKey:@"mid"];
+    if (mid==nil ||[mid isEqualToString:@""]||[mid isKindOfClass:[NSNull class]]) {
+        [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/Public/about"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30]];
+
+    }
+    else
+    {
+        
+        [myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.lehuozongxiang.com/Member/about"] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:30]];
+    }
+
+    
     myWebView.scrollView.bounces = NO;
     [self.view addSubview:myWebView];
     
